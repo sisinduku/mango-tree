@@ -13,10 +13,7 @@
   "dependencies": {
     "bootstrap-vue": "^1.0.0-beta.9",
     "cron": "^1.3.0",
-<<<<<<< 2c7d54fe5586ef963f48e1b1b8105b598e637ed8
     "dotenv": "^4.0.0",
-=======
->>>>>>> Add Trees Dashboard
     "firebase": "^4.6.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
