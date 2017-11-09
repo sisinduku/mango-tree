@@ -49,6 +49,11 @@ class FruitTree {
     }
   }
 
+  resetTree () {
+    this._age = 0
+    this._isHealthy = true
+  }
+
   // Get some fruits
   harvest () {
     let countAll = 0
@@ -175,7 +180,7 @@ treeRef.set(null)
     let newMangoTree = treeRef.push()
     let mangoTree = new MangoTree(21, 14, 15, 3, 20)
     let newPearTree = treeRef.push()
-    let pearTree = new PearTree(25, 22, 10, 4, 23)
+    let pearTree = new PearTree(25, 22, 14, 4, 23)
 
     Promise.all([newAppleTree.set(appleTree), newMangoTree.set(mangoTree), newPearTree.set(pearTree)])
       .then(() => {
@@ -184,7 +189,7 @@ treeRef.set(null)
         console.log('Created new tree: ', pearTree.treeName)
 
         let job = new CronJob({
-          cronTime: '1-59/2 * * * *',
+          cronTime: '* * * * *',
           onTick: function () {
             console.log('Running Cron')
             if (appleTree.getHealtyStatus() !== false) {
@@ -192,6 +197,15 @@ treeRef.set(null)
               appleTree.produceFruits()
               appleTree.harvest()
               appleTree.checkLivingAge()
+              newAppleTree.update(appleTree)
+                .then(() => {
+                  console.log(appleTree)
+                })
+                .catch((err) => {
+                  console.error(err)
+                })
+            } else {
+              appleTree.resetTree()
               newAppleTree.update(appleTree)
                 .then(() => {
                   console.log(appleTree)
@@ -212,12 +226,30 @@ treeRef.set(null)
                 .catch((err) => {
                   console.error(err)
                 })
+            } else {
+              mangoTree.resetTree()
+              newMangoTree.update(mangoTree)
+                .then(() => {
+                  console.log(mangoTree)
+                })
+                .catch((err) => {
+                  console.error(err)
+                })
             }
             if (pearTree.getHealtyStatus() !== false) {
               pearTree.grow()
               pearTree.produceFruits()
               pearTree.harvest()
               pearTree.checkLivingAge()
+              newPearTree.update(pearTree)
+                .then(() => {
+                  console.log(pearTree)
+                })
+                .catch((err) => {
+                  console.error(err)
+                })
+            } else {
+              pearTree.resetTree()
               newPearTree.update(pearTree)
                 .then(() => {
                   console.log(pearTree)
